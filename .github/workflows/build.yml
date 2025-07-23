@@ -6,6 +6,7 @@ on:
       - "v*.*.*" # Triggers on version tags like v1.0.0
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -35,24 +36,24 @@ jobs:
       - name: Rename executable for OS
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            mv dist/github_data.exe github_data-windows.exe
+            mv dist/github_data.exe github_data-1.0.0-windows.exe
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            mv dist/github_data github_data-macos
+            mv dist/github_data github_data-1.0.0-macos
           else
-            mv dist/github_data github_data-linux
+            mv dist/github_data github_data-1.0.0-linux
           fi
         shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: github_data-${{ matrix.os }}
-          path: github_data-*
+          name: github_data-1.0.0-${{ matrix.os }}
+          path: github_data-1.0.0-*
 
       - name: Upload to GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: github_data-*
+          files: github_data-1.0.0-*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
