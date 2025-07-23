@@ -1,0 +1,20 @@
+# macOS system files
+*.DS_Store
+*.env
+
+# AppleScript compiled apps and binaries
+*.app
+*.scpt
+
+# Editor swap files
+*.swp
+
+# Standup logs (keep the docs/ folder, ignore txt files)
+docs/*.txt
+
+# Python virtual environments
+venv/
+
+# Other system files
+Icon?
+._*
