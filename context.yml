@@ -4,3 +4,10 @@ types:
   Open source
 projects:
   my_side_projects: https://github.com/users/Achoobert/projects/7
+local_llm: 
+  enabled: true
+  prompt: Do not include time stamps, convert these logs into a pretty daily standup report with links to the relivant github issues, prs, or repos. Output in a format suitable for google chat. return only the report
+  chunk_size: 4000
+  model: "llama3:8b"
+  api: "http://localhost:11434/api/generate"
+  start_command: ollama run llama3:8b

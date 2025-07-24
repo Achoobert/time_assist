@@ -63,3 +63,16 @@ The Reporter application needs to be packaged as distributable executables (DMG 
 3. WHEN the application is installed on Linux THEN the system SHALL create desktop entries and integrate with the application menu
 4. WHEN a user right-clicks the application icon THEN the system SHALL show appropriate context menu options for the platform
 5. WHEN the application is running THEN the system SHALL display proper application icons in the taskbar/dock
+
+### Requirement 6
+
+**User Story:** As a user, I want to process my daily work logs through a local LLM to generate professional standup reports, so that I can quickly create formatted reports for team meetings.
+
+#### Acceptance Criteria
+
+1. WHEN a user clicks "Generate LLM Report" THEN the system SHALL send the current day's work log to a local LLM API
+2. WHEN the LLM processes the work log THEN the system SHALL display the generated standup report in a dedicated UI area
+3. WHEN the LLM is not available THEN the system SHALL show clear error messages with instructions to start the LLM
+4. WHEN a user configures LLM settings in context.yml THEN the system SHALL use the custom prompt, model, and API endpoint
+5. WHEN the generated report is displayed THEN the system SHALL provide a "Copy LLM Report" button for easy sharing
+6. WHEN work logs are too large THEN the system SHALL chunk the content appropriately for the LLM's context window

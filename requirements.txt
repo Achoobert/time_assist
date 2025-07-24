@@ -1,2 +1,3 @@
 pyyaml
-pyqt5  # for future dashboard UI 
+pyqt5  # for dashboard UI
+requests  # for LLM API integration 
