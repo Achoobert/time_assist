@@ -3,6 +3,8 @@
 A *LOCAL* simple work tracking app that helps you log daily activities and generate standup reports with GitHub integration.
 
 Nothing goes to the internet unless you manually send it
+You own the logs you create!
+
 
 The goal is to apply the advice given in `Software Engineer’s Guidebook/ Owning your career/ Keep a work log`
 

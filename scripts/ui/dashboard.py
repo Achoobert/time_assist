@@ -23,7 +23,7 @@ class ClickableLabel(QLabel):
         super().__init__(text)
         self.url = url
         if url:
-            self.setStyleSheet("color: blue; text-decoration: underline; padding: 4px; border-bottom: 1px solid #eee;")
+            self.setStyleSheet("color: aqua; text-decoration: underline; padding: 4px; border-bottom: 1px solid #eee;")
             self.setCursor(QCursor(Qt.PointingHandCursor))
         else:
             self.setStyleSheet("padding: 4px; border-bottom: 1px solid #eee;")

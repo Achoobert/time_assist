@@ -1,4 +1,4 @@
-name: Build and Release Python Executable
+name: Build and Release Reporter App
 
 on:
   push:
@@ -29,31 +29,56 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build executable
+      - name: Build executable using spec file
         run: |
-          pyinstaller --onefile scripts/github_data.py
+          pyinstaller reporter.spec --noconfirm
 
-      - name: Rename executable for OS
+      - name: Package and rename executable for OS
         run: |
           if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            mv dist/github_data.exe github_data-1.0.0-windows.exe
+            # Windows: zip the Reporter directory
+            cd dist
+            zip -r ../Reporter-1.0.0-windows.zip Reporter/
+            cd ..
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            mv dist/github_data github_data-1.0.0-macos
+            # macOS: create tar.gz with both app bundle and standalone
+            cd dist
+            tar -czf ../Reporter-1.0.0-macos.tar.gz Reporter/ Reporter.app/
+            cd ..
           else
-            mv dist/github_data github_data-1.0.0-linux
+            # Linux: tar.gz the Reporter directory
+            cd dist
+            tar -czf ../Reporter-1.0.0-linux.tar.gz Reporter/
+            cd ..
           fi
         shell: bash
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: github_data-1.0.0-${{ matrix.os }}
-          path: github_data-1.0.0-*
+          name: Reporter-1.0.0-${{ matrix.os }}
+          path: Reporter-1.0.0-*
 
       - name: Upload to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: github_data-1.0.0-*
+          tag_name: latest
+          name: "Reporter - Latest Build"
+          body: |
+            Latest build of Reporter app with PyQt GUI and GitHub integration.
+            
+            **Download for your platform:**
+            - **macOS**: Reporter-1.0.0-macos.tar.gz (includes both .app bundle and standalone)
+            - **Windows**: Reporter-1.0.0-windows.zip 
+            - **Linux**: Reporter-1.0.0-linux.tar.gz
+            
+            **Features:**
+            - PyQt dashboard with autofocus text input
+            - GitHub integration with clickable links
+            - Work logging with organization/project context
+            - Daily standup report generation
+          files: Reporter-1.0.0-*
+          prerelease: false
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
