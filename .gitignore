@@ -14,6 +14,17 @@ docs/*.txt
 
 # Python virtual environments
 venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# PyInstaller build artifacts
+build/
+dist/
+
+# Python egg info
+*.egg-info/
 
 # Other system files
 Icon?
