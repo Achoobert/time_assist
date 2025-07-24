@@ -37,24 +37,24 @@ jobs:
         run: |
           pyinstaller reporter.spec --noconfirm
 
-      - name: Package and rename executable for OS
+      - name: Package and rename executable for OS (Windows)
+        if: matrix.os == 'windows-latest'
         run: |
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            # Windows: zip the Reporter directory
-            cd dist
-            zip -r ../Reporter-1.0.0-windows.zip Reporter/
-            cd ..
-          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            # macOS: create tar.gz with both app bundle and standalone
-            cd dist
-            tar -czf ../Reporter-1.0.0-macos.tar.gz Reporter/ Reporter.app/
-            cd ..
-          else
-            # Linux: tar.gz the Reporter directory
-            cd dist
-            tar -czf ../Reporter-1.0.0-linux.tar.gz Reporter/
-            cd ..
-          fi
+          Compress-Archive -Path "dist\Reporter" -DestinationPath "Reporter-1.0.0-windows.zip"
+        shell: powershell
+
+      - name: Package and rename executable for OS (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd dist
+          tar -czf ../Reporter-1.0.0-macos.tar.gz Reporter/ Reporter.app/
+        shell: bash
+
+      - name: Package and rename executable for OS (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cd dist
+          tar -czf ../Reporter-1.0.0-linux.tar.gz Reporter/
         shell: bash
 
       - name: Upload artifact
