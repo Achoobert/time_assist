@@ -11,3 +11,9 @@ local_llm:
   model: "llama3:8b"
   api: "http://localhost:11434/api/generate"
   start_command: ollama run llama3:8b
+ui:
+  language: "en"  # en, th, zh
+  available_languages:
+    en: "English"
+    th: "ไทย"
+    zh: "中文"

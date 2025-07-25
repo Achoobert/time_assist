@@ -97,5 +97,8 @@ if sys.platform == 'darwin':
             'CFBundleShortVersionString': '1.0.0',
             'NSHighResolutionCapable': True,
             'LSMinimumSystemVersion': '10.13.0',
+            'LSApplicationCategoryType': 'public.app-category.productivity',
+            'NSAppleEventsUsageDescription': 'Reporter needs access to system events for GitHub integration.',
+            'NSNetworkVolumesUsageDescription': 'Reporter may access network resources for GitHub API calls.',
         },
     )

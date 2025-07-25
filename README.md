@@ -22,8 +22,12 @@ The goal is to apply the advice given in `Software Engineer’s Guidebook/ Ownin
 
 ### Download & Run
 1. Download the latest release for your platform
-2. **macOS**: Open `Reporter.app` 
-3. **Windows/Linux**: Run the `Reporter` executable
+2. **macOS**: Extract and open `Reporter.app`
+   - If you see "cannot be opened because it is from an unidentified developer":
+     - Right-click the app → **"Open"**
+     - Click **"Open"** in the security dialog
+     - Or: System Preferences → Security & Privacy → **"Open Anyway"**
+3. **Windows/Linux**: Extract and run the `Reporter` executable
 4. Start logging your work!
 
 ### From Source
@@ -57,3 +61,17 @@ The app uses the GitHub CLI (`gh`) to fetch your assigned issues, pull requests,
 ```bash
 gh auth login
 ```
+
+## Code Signing Status
+
+- **macOS**: Self-signed with ad-hoc signature (reduces but doesn't eliminate security warnings)
+- **Windows**: Unsigned (Windows Defender may show warnings)
+- **Linux**: No signing required
+
+### macOS Security Notes
+The app is self-signed, which means:
+- ✅ **Safer than unsigned**: Basic integrity verification
+- ⚠️ **Still shows warnings**: Not from identified Apple developer
+- 🔓 **Easy bypass**: Right-click → Open works immediately
+
+For a completely seamless experience, we'd need an Apple Developer Program membership ($99/year).

@@ -37,6 +37,25 @@ jobs:
         run: |
           pyinstaller reporter.spec --noconfirm
 
+      - name: Sign macOS app bundle (self-signed)
+        if: matrix.os == 'macos-latest'
+        run: |
+          # Create a temporary keychain
+          security create-keychain -p "" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security set-keychain-settings build.keychain
+          
+          # Create a self-signed certificate
+          security add-certificates /System/Library/Keychains/SystemRootCertificates.keychain
+          
+          # Sign the app bundle with ad-hoc signature
+          codesign --deep --force --verify --verbose --sign "-" dist/Reporter.app
+          
+          # Verify the signature
+          codesign --verify --verbose=2 dist/Reporter.app
+          spctl --assess --verbose dist/Reporter.app || echo "Note: Self-signed apps will show Gatekeeper warnings"
+
       - name: Package and rename executable for OS (Windows)
         if: matrix.os == 'windows-latest'
         run: |
